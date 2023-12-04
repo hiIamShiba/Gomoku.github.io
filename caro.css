@@ -1,0 +1,295 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+/*#flex_container {display: flex;}
+#left_side {flex: 70%; background-color: #000; padding: 0px 20px;}
+#right_side {flex: 30%;	padding: 10px 20px;}*/
+
+body{
+    background : #FAF4D6;
+}
+
+#hello {color: white; text-align: center;}
+
+#gameBoard {background-color: black;
+    margin-top: 3.5vh;
+}
+
+.cell {background-color: #fff; width: 2.2vw; height: 2.2vw; padding: 0px; font-family: 'Cherry Bomb'; 
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.5vw;
+    color: black;
+}
+
+.x-cell {
+    color: red;
+}
+
+.o-cell {
+    color: blue;
+}
+
+.cell:hover {background-color: #ccc;}
+
+.icon {width: 20px; height: 20px; display: block; padding: 5px;}
+.icon:hover {background-color: darkblue;}
+
+table {margin: auto;}
+
+.container{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5vh;
+    flex-direction: column;
+    top: 35vh;
+    left: 8vw;
+}
+
+.home{
+    width: 10vw;
+    height: 8vh;
+    cursor: pointer;
+    background : #EE6262;
+    border-radius: 15px;
+    font-family: 'Cherry Bomb';
+    font-size: 2.5vw;
+    border: none;
+  }
+  
+  .undo{
+    width: 10vw;
+    height: 8vh;
+    border: none;
+    cursor: pointer;
+    background : #EE6262;
+    border-radius: 15px;
+    font-family: 'Cherry Bomb';
+    font-size: 2.5vw;
+  }
+  
+  .point-controller{
+    background-color: white;
+    position: absolute;
+    left: 78.5vw;
+    top: 25vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 4vw;
+    flex-direction: row;
+    border-radius: 0.8vw;
+    border: 0.4vh solid black;
+    height: 30vh;
+  }
+  
+  .player-x{
+    margin-top: 2vh;
+    font-family: 'Cherry Bomb';
+    margin-left: 1.2vw;
+    font-size: 2.2vw;
+  }
+  
+  .player-o{
+    font-family: 'Cherry Bomb';
+    margin-top: 2vh;
+    margin-right: 1.2vw;
+    font-size: 2.2vw;
+  }
+  
+  .point{
+    position: absolute;
+    left: 81vw;
+    top: 25vh;
+    height: 30vh;
+    gap: 6.5vw;
+  }
+  
+  #player-x{
+    padding-right: 5.68vw;
+    font-family: 'Cherry Bomb';
+    font-size: 5.0vw;
+  }
+  
+  #player-o{
+    font-family: 'Cherry Bomb';
+    font-size: 5.0vw;
+  }
+
+  .popup-container {
+    display: none;
+    position: fixed;
+    top : 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+  
+  .popup-content {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    height: 30em;
+    width: 30em;
+    padding-left: 8.59em;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    animation : fadeOut 0.2s ease-out;
+  }
+
+  #announcement{
+    position: absolute;
+    top: 20%;
+    text-align: center;
+    font-family: 'Cherry Bomb';
+    font-size: 500%;
+  }
+
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+
+@media only screen and (max-width: 500px){
+
+    #gameBoard {background-color: black;
+        margin-top: 28.5vh;
+    }
+    
+    .cell {background-color: #fff; width: 4.5vw; height: 4.5vw; padding: 0px; font-family: 'Cherry Bomb'; 
+        cursor: pointer;
+        text-align: center;
+        font-size: 3.2vw;
+        color: black;
+    }
+
+    .cell:hover {background-color: #ccc;}
+    
+    .x-cell {
+        color: red;
+    }
+    
+    .o-cell {
+        color: blue;
+    }
+    
+    .icon {width: 20px; height: 20px; display: block; padding: 5px;}
+    .icon:hover {background-color: darkblue;}
+    
+    table {margin: auto;}
+    
+    .container{
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10vh;
+        flex-direction: row;
+        top: 5vh;
+        left: 9vw;
+    }
+    
+    .home{
+        width: 30vw;
+        height: 5vh;
+        cursor: pointer;
+        background : #EE6262;
+        border-radius: 15px;
+        font-family: 'Cherry Bomb';
+        font-size: 5.5vw;
+        border: none;
+      }
+      
+      .undo{
+        width: 30vw;
+        height: 5vh;
+        border: none;
+        cursor: pointer;
+        background : #EE6262;
+        border-radius: 15px;
+        font-family: 'Cherry Bomb';
+        font-size: 5.5vw;
+      }
+
+      .point-controller{
+        background-color: white;
+        position: absolute;
+        left: 30.5vw;
+        top: 14vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10vw;
+        flex-direction: row;
+        border-radius: 0.8vw;
+        border: 0.4vh solid black;
+        height: 10vh;
+      }
+      
+      .player-x{
+        margin-top: 1vh;
+        font-family: 'Cherry Bomb';
+        margin-left: 1.5vw;
+        font-size: 5.4vw;
+      }
+      
+      .player-o{
+        font-family: 'Cherry Bomb';
+        margin-top: 1vh;
+        margin-right: 1.5vw;
+        font-size: 5.4vw;
+      }
+      
+      .point{
+        position: absolute;
+        left: 38.1vw;
+        top: 5.5vh;
+        height: 30vh;
+    }
+      
+      #player-x{
+        padding-right: 18.5vw;
+        font-family: 'Cherry Bomb';
+        font-size: 5.4vw;
+      }
+      
+      #player-o{
+        font-family: 'Cherry Bomb';
+        font-size: 5.4vw;
+      }
+      .popup-content {
+        height: 20em;
+        width: 20em;
+        padding-left: 1.2em;
+      }
+      
+      #announcement{
+        top: 10%;
+        font-size: 400%;
+        left: 10%;
+      }
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title> Game Cờ Caro </title>
+        <link rel="stylesheet" href="style.css" />
+        <link href='https://fonts.googleapis.com/css?family=Cherry Bomb' rel='stylesheet'>
+    </head>
+    <body>
+        <div class="container">
+            <img class="icon" src="icon.png">
+        </div>
+        <p class="title">
+            GOMOKU
+        </p>
+        <div class="button-container">
+          <button id="start" class="start">
+            PLAY
+        </button>
+        </div>
+        <div id="popupContainer" class="popup-container">
+            <div class="popup-content">
+                <span class="close-btn" id="closePopupBtn">&times;</span>
+                <button id="vscomputer" class="computer"> VS COMPUTER </button>
+                <button id="vsplayer" class="vsplayer"> 2 PLAYERS </button>
+            </div>
+        </div>
+
+        <script src="caro.js"></script>
+
+        <script>
+            const button2 = document.querySelector(".vsplayer");
+            button2.addEventListener("click", (e) => {
+              e.preventDefault;
+              button2.classList.add("animate");
+              setTimeout(() => {
+                button2.classList.remove("animate");
+              }, 300);
+            });
+          </script>
+
+        <script>
+            const button = document.querySelector(".start");
+            button.addEventListener("click", (e) => {
+              e.preventDefault;
+              button.classList.add("animate");
+              setTimeout(() => {
+                button.classList.remove("animate");
+              }, 300);
+            });
+          </script>
+    </body>
+</html>

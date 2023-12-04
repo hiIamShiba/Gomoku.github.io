@@ -1,0 +1,615 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+* {
+    margin : 0 ;
+    padding : 0 ;
+}
+.start {
+    cursor : pointer;
+    position : absolute;
+    border-radius: 20px;
+    width: 380px;
+    height: 100px;
+    font-family: 'Cherry Bomb';
+    font-size: 50px;
+    border : none;
+    background : #fdfa72;
+    transition: all 0.2s ease;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    padding-top: 10vh;
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  padding-top: 3vh;
+}
+
+.icon{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+body{
+    background : #FAF4D6;
+}
+
+.title{
+    text-align: center;
+    color : chocolate;
+    font-family: 'Cherry Bomb';
+    font-size: 110px;
+    padding-top: 5vh;
+}
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top : 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  height: 30em;
+  width: 30em;
+  padding-left: 1.59em;
+}
+
+.computer {
+  cursor : pointer;
+  position : absolute;
+  top : 60%;
+  background : #EE6262;
+  border-radius: 20px;
+  width : 90%;
+  height : 25%;
+  font-family: 'Cherry Bomb';
+  font-size: 50px;
+  border : none;
+}
+
+.vsplayer {
+  cursor : pointer;
+  position : absolute;
+  top : 20%;
+  background : #EE6262;
+  border-radius: 20px;
+  width : 90%;
+  height : 25%;
+  font-family: 'Cherry Bomb';
+  font-size: 50px;
+  border : none;
+  align-items: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  animation : fadeOut 0.2s ease-out;
+}
+
+.board {
+  max-width: 100%;
+  align-self: center;
+  display: grid;
+  grid-template-columns: repeat(19, 5.1vh);
+  grid-gap: 1px;
+}
+.cell {
+  width: 4.55vh;
+  height: 4.55vh;
+  background-color: #fff;
+  border: 0.25vh solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Cherry Bomb';
+  font-size: 4.25vh;
+  color: red;
+}
+.cell:hover {
+  background-color: #ccc;
+}
+
+.x-cell {
+  color: red; 
+}
+
+.o-cell {
+  color: blue;
+}
+
+.tool-container{
+  top: 30vh;
+  left: 8vw;
+  position: absolute;
+  flex-direction: column;
+  gap: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-container{
+  left: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 99.4vh;
+}
+
+.home{
+  width: 10vw;
+  height: 8vh;
+  cursor: pointer;
+  background : #EE6262;
+  border-radius: 1vw;
+  font-family: 'Cherry Bomb';
+  font-size: 2.5vw;
+  border: none;
+}
+
+.undo{
+  width: 10vw;
+  height: 8vh;
+  border: none;
+  cursor: pointer;
+  background : #EE6262;
+  border-radius: 1vw;
+  font-family: 'Cherry Bomb';
+  font-size: 2.5vw;
+}
+
+.point-controller{
+  background-color: white;
+  position: absolute;
+  left: 78.5vw;
+  top: 25vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4vw;
+  flex-direction: row;
+  border-radius: 0.8vw;
+  border: 0.4vh solid black;
+  height: 30vh;
+}
+
+.player-x{
+  margin-top: 2vh;
+  font-family: 'Cherry Bomb';
+  margin-left: 1.2vw;
+  font-size: 1.4vw;
+}
+
+.player-o{
+  font-family: 'Cherry Bomb';
+  margin-top: 2vh;
+  margin-right: 1.2vw;
+  font-size: 1.4vw;
+}
+
+.point{
+  position: absolute;
+  left: 81vw;
+  top: 25vh;
+  height: 30vh;
+  gap: 6.5vw;
+}
+
+#player-x{
+  padding-right: 5.68vw;
+  font-family: 'Cherry Bomb';
+  font-size: 5.4vw;
+}
+
+#player-o{
+  font-family: 'Cherry Bomb';
+  font-size: 5.4vw;
+}
+
+#announcement{
+  position: absolute;
+  top: 30%;
+  text-align: center;
+  font-family: 'Cherry Bomb';
+  font-size: 500%;
+}
+
+  @keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+  
+  button:hover{
+      box-shadow: 0 0 0 4px #fff,
+      0 0 0 8px black;
+  }
+  
+  button:active {
+      transform: scale(0.96);
+    }
+    button:before,
+    button:after {
+      position: absolute;
+      content: "";
+      width: 150%;
+      left: 50%;
+      height: 100%;
+      transform: translateX(-50%);
+      z-index: -1000;
+      background-repeat: no-repeat;
+    }
+    button.animate::before {
+      top: -70%;
+      background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, transparent 20%, #7d2ae8 20%, transparent 30%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+      background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+        10% 10%, 18% 18%;
+      animation: greentopBubbles ease-in-out 0.6s forwards infinite;
+    }
+    @keyframes greentopBubbles {
+      0% {
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+          40% 90%, 55% 90%, 70% 90%;
+      }
+      50% {
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+          50% 50%, 65% 20%, 90% 30%;
+      }
+      100% {
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+          50% 40%, 65% 10%, 90% 20%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+      }
+    }
+    button.animate::after {
+      bottom: -70%;
+      background-image: radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, transparent 10%, #7d2ae8 15%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%),
+        radial-gradient(circle, #7d2ae8 20%, transparent 20%);
+      background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+      animation: greenbottomBubbles ease-in-out 0.6s forwards infinite;
+    }
+    @keyframes greenbottomBubbles {
+      0% {
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+          70% -10%, 70% 0%;
+      }
+      50% {
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+          105% 0%;
+      }
+      100% {
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+          110% 10%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+      }
+    }
+
+@media only screen and (max-width: 500px){
+  * {
+    margin : 0 ;
+    padding : 0 ;
+  }
+  .start {
+    cursor : pointer;
+    position : absolute;
+    border-radius: 20px;
+    width: 250px;
+    height: 80px;
+    font-family: 'Cherry Bomb';
+    font-size: 50px;
+    border : none;
+    background : #fdfa72;
+    transition: all 0.2s ease;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 230px;
+    padding-top: 20vh;
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100vw;
+  padding-top: 6vh;
+}
+
+.icon{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+body{
+    background : #FAF4D6;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.title{
+    text-align: center;
+    color : chocolate;
+    font-family: 'Cherry Bomb';
+    font-size: 50px;
+    padding-top: 5vh;
+}
+
+.popup-content {
+  height: 20em;
+  width: 20em;
+  padding-left: 1.2em;
+}
+
+.computer {
+  width : 90%;
+  height : 25%;
+  font-size: 35px;
+}
+
+.vsplayer {
+  width : 90%;
+  height : 25%;
+  font-size: 35px;
+}
+
+.board {
+  margin : 0 ;
+  padding : 0 ;
+  align-self: center;
+  display: grid;
+  grid-template-columns: repeat(19, 4.8vw);
+  grid-gap: 0.3vw;
+}
+.cell {
+  width: 3.8vw;
+  height: 3.8vw;
+  background-color: #fff;
+  border: 0.25vh solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-family: 'Cherry Bomb';
+  font-size: 4vw;
+  color: red;
+}
+
+.x-cell {
+  color: red; 
+}
+
+.o-cell {
+  color: blue;
+}
+
+.tool-container{
+  margin: 0;
+  padding: 0;
+  top: 10vh;
+  left: 9vw;
+  position: absolute;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+}
+
+.board-container{
+  margin: 0;
+  padding: 0;
+  margin-top: 6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.home{
+  margin : 0 ;
+  padding : 0 ;
+  width: 30vw;
+  height: 5vh;
+  cursor: pointer;
+  background : #EE6262;
+  border-radius: 1vw;
+  font-family: 'Cherry Bomb';
+  font-size: 7.5vw;
+  border: none;
+}
+
+.undo{
+  margin : 0 ;
+  padding : 0 ;
+  width: 30vw;
+  height: 5vh;
+  border: none;
+  cursor: pointer;
+  background : #EE6262;
+  border-radius: 1vw;
+  font-family: 'Cherry Bomb';
+  font-size: 7.5vw;
+}
+
+.point-controller{
+  margin : 0 ;
+  padding : 0 ;
+  background-color: white;
+  position: absolute;
+  left: 29vw;
+  top: 19vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4vw;
+  flex-direction: row;
+  border-radius: 0.8vw;
+  border: 0.4vh solid black;
+  height: 10vh;
+}
+
+.player-x{
+  margin-top: 1vh;
+  font-family: 'Cherry Bomb';
+  margin-left: 1.2vw;
+  font-size: 4.4vw;
+}
+
+.player-o{
+  font-family: 'Cherry Bomb';
+  margin-top: 1vh;
+  margin-right: 1.2vw;
+  font-size: 4.4vw;
+}
+
+.point{
+  margin : 0 ;
+  padding : 0 ;
+  position: absolute;
+  left: 38.4vw;
+  top: 11vh;
+  height: 30vh;
+}
+
+#player-x{
+  padding-right: 15.9vw;
+  font-family: 'Cherry Bomb';
+  font-size: 5.4vw;
+}
+
+#player-o{
+  font-family: 'Cherry Bomb';
+  font-size: 5.4vw;
+}
+}
+
+@media only screen and (max-width: 300px){
+  .start {
+    cursor : pointer;
+    position : absolute;
+    border-radius: 20px;
+    width: 160px;
+    height: 80px;
+    font-family: 'Cherry Bomb';
+    font-size: 50px;
+    border : none;
+    background : #fdfa72;
+    transition: all 0.2s ease;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 230px;
+    padding-top: 20vh;
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 100vw;
+  padding-top: 6vh;
+}
+
+.icon{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+body{
+    background : #FAF4D6;
+}
+
+.title{
+    text-align: center;
+    color : chocolate;
+    font-family: 'Cherry Bomb';
+    font-size: 50px;
+    padding-top: 5vh;
+}
+
+.popup-content {
+  height: 15em;
+  width: 15em;
+  padding-left: 0.85em;
+}
+
+.computer {
+  width : 90%;
+  height : 25%;
+  font-size: 25px;
+}
+
+.vsplayer {
+  width : 90%;
+  height : 25%;
+  font-size: 25px;
+}
+
+.x-cell {
+  color: red; 
+}
+
+.o-cell {
+  color: blue;
+}
+}

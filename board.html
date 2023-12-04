@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title> Play now! </title>
+        <link rel="stylesheet" href="style.css" />
+        <link href='https://fonts.googleapis.com/css?family=Cherry Bomb' rel='stylesheet'>
+    </head>
+    <body>
+            <div class="tool-container">
+                <button id="home" class="home"> Home </button>
+                <button id="undoButton" class="undo">Undo</button>
+            </div>
+            <div class="board-container">
+                <div class="board" id="board"></div>
+            </div>
+            <div class="point-controller">
+                <p class="player-x">Player X</p>
+                <p class="player-o">Player O</p>
+            </div>
+            <table class="point">
+                <tr>
+                    <td id="player-x">0</td>
+                    <td id="player-o">0</td>
+                </tr>
+            </table>
+            <div id="popupContainer" class="popup-container">
+                <div class="popup-content">
+                    <span class="close-btn" id="closePopupBtn">&times;</span>
+                    <p id="announcement">Player X wins</p>
+                </div>
+            </div>
+        <script src="board.js"></script>
+    </body>
+</html>

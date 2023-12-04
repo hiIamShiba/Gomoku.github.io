@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <meta name="author" content="Tên nhóm"> -->
+		<meta name="game" content="caro">
+		<script src="caroFinal.js"></script>
+		<link rel="stylesheet" href="caro.css">
+		<link href='https://fonts.googleapis.com/css?family=Cherry Bomb' rel='stylesheet'>
+	</head>
+	<body>
+		<div class="container">
+			<button id="home" class="home">HOME</button>
+			<button id="undo" class="undo">UNDO</button>
+		</div>	
+		<div class="point-controller">
+			<p class="player-x">Player</p>
+			<p class="player-o">Jasi</p>
+		</div>
+		<table class="point">
+			<tr>
+				<td id="player-x">0</td>
+				<td id="player-o">0</td>
+			</tr>
+		</table>
+		<table cellpadding="10" id="gameBoard"></table>
+		<div id="popupContainer" class="popup-container">
+			<div class="popup-content">
+				<span class="close-btn" id="closePopupBtn">&times;</span>
+				<p id="announcement">You wins</p>
+			</div>
+		</div>
+	</body>
+</html>
