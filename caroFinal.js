@@ -304,6 +304,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
         					announcement.innerText = `You win!`;
         					popupContainer.style.display = "flex";
 
+							// Đóng popup khi ấn vào dấu x
 							closePopupBtn.addEventListener("click", function () {
 								popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
 								setTimeout(function (){
@@ -331,7 +332,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}
 								});
 
-							}
+							playGame(playerTurn = false, playerScores+1, jasiScores);}
 						jasiMove = minimax(board, depth=4, alpha=-1.0/0.0, beta=1.0/0.0, jasiTurn=true, someoneWin=false, isWin4(board.main, i, j));
 						board.button[jasiMove[0]][jasiMove[1]].innerHTML = jasiIcon;
 						board.button[jasiMove[0]][jasiMove[1]].classList.add("o-cell");
@@ -343,6 +344,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
         					announcement.innerText = `Jasi wins!`;
         					popupContainer.style.display = "flex";
 
+							// Đóng popup khi ấn vào dấu x
 							closePopupBtn.addEventListener("click", function () {
 								popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
 								setTimeout(function (){
@@ -369,6 +371,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}, 1500);
 									}
 								});
+
 							}
 						}, 50);
 					}, 50);
