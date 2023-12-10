@@ -1,5 +1,7 @@
 var backToHome = document.getElementById("home");
 
+
+// Về trang chủ
 backToHome.addEventListener("click", function (){
     window.location.href = "index.html";
 });
@@ -23,8 +25,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to check for a win after each move
+    // Kiểm tra chiến thắng
 function checkWin() {
+
+    // Cập nhật điểm số người chơi
     function updateScore(playerNumber) {
         var scoreElement = document.getElementById(playerNumber);
         var currentScore = parseInt(scoreElement.innerText);
@@ -33,6 +37,7 @@ function checkWin() {
     }
     const cells = document.querySelectorAll('.cell');
 
+    // Kiểm tra xem đã đủ 5 ký tự liên tiếp chưa
     function checkConsecutive(start, step) {
         const player = cells[start].textContent;
         if (!player) return false;
@@ -49,7 +54,7 @@ function checkWin() {
         return true;
     }
 
-    // Check rows
+    // Kiểm tra hàng
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j <= boardSize - 5; j++) {
             if (checkConsecutive(i * boardSize + j, 1)) {
@@ -58,7 +63,7 @@ function checkWin() {
         }
     }
 
-    // Check columns
+    // Kiểm tra cột
     for (let i = 0; i < boardSize; i++) {
         for (let j = 0; j <= boardSize - 5; j++) {
             if (checkConsecutive(i + j * boardSize, boardSize)) {
@@ -67,7 +72,7 @@ function checkWin() {
         }
     }
 
-    // Check diagonals
+    // Kiểm tra đường chéo
     for (let i = 0; i <= boardSize - 5; i++) {
         for (let j = 0; j <= boardSize - 5; j++) {
             if (checkConsecutive(i * boardSize + j, boardSize + 1) ||
@@ -77,7 +82,7 @@ function checkWin() {
         }
     }
 
-    // Check for a tie
+    // Kiểm tra kết quả hòa
     if (moveHistory.length === boardSize * boardSize) {
         announceWinner("Tie");
     }
@@ -96,20 +101,20 @@ function announceWinner(winner) {
     }
 }
 
-// Function to reset the game
+// Khởi tạo lại trò chơi
 function resetGame() {
     const cells = document.querySelectorAll('.cell');
 
-    // Clear the board
+    // Xóa dữ liệu bảng
     cells.forEach(cell => {
         cell.textContent = '';
         cell.classList.remove('x-cell', 'o-cell');
     });
 
-    // Clear move history
+    // Xóa lịch sử các nước đi
     moveHistory.length = 0;
 
-    // Reset click count in local storage
+    // Khởi tạo lại biến đếm số lượt đánh
     localStorage.setItem('clickCount', '0');
 }
 
@@ -129,9 +134,13 @@ function resetGame() {
             } else {
                 clickedCell.classList.add("o-cell");
             }
+
+            // Kiểm tra trận thắng sau mỗi nước đi
             setTimeout(() => {
                 checkWin();
             }, 50);
+
+            // Lưu nước đi vào lịch sử đánh
             moveHistory.push({
                 row: row,
                 col: col,
@@ -166,11 +175,12 @@ function resetGame() {
         return clickCount;
     }
 
-    // Kiểm tra số chẵn
+    // Kiểm tra số lần đánh là chẵn hay lẻ
     function isEven(num) {
         return num % 2 === 0;
     }
 
+    // Đóng popup thông báo khi nhấn dấu x
     closePopupBtn.addEventListener("click", function () {
         popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
         setTimeout(function (){
@@ -182,7 +192,7 @@ function resetGame() {
             }, 500);
     });
 
-    // Đóng popup khi nhấn bên ngoài nó
+    // Đóng popup thông báo khi nhấn bên ngoài nó
     window.addEventListener("click", function (event) {
         if (event.target === popupContainer) {
             popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
