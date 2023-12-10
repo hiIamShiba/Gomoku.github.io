@@ -312,6 +312,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 								}, 100);
 								setTimeout(() => {
 									boardDraw();
+									playGame(playerTurn = true, playerScores, jasiScores+1);
 								}, 1500);
 							});
 						
@@ -325,11 +326,12 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}, 100);
 									setTimeout(() => {
 										boardDraw();
+										playGame(playerTurn = true, playerScores, jasiScores+1);
 									}, 1500);
 									}
 								});
 
-							playGame(playerTurn = false, playerScores+1, jasiScores);}
+							}
 						jasiMove = minimax(board, depth=4, alpha=-1.0/0.0, beta=1.0/0.0, jasiTurn=true, someoneWin=false, isWin4(board.main, i, j));
 						board.button[jasiMove[0]][jasiMove[1]].innerHTML = jasiIcon;
 						board.button[jasiMove[0]][jasiMove[1]].classList.add("o-cell");
@@ -349,6 +351,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 								}, 100);
 								setTimeout(() => {
 									boardDraw();
+									playGame(playerTurn = true, playerScores, jasiScores+1);
 								}, 1500);
 							});
 						
@@ -362,11 +365,11 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}, 100);
 									setTimeout(() => {
 										boardDraw();
+										playGame(playerTurn = true, playerScores, jasiScores+1);
 									}, 1500);
 									}
 								});
-
-							playGame(playerTurn = true, playerScores, jasiScores+1);}
+							}
 						}, 50);
 					}, 50);
 				}
