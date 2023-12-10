@@ -312,7 +312,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 								}, 100);
 								setTimeout(() => {
 									boardDraw();
-									playGame(playerTurn = true, playerScores, jasiScores+1);
+									playGame(playerTurn = true, playerScores+1, jasiScores);
 								}, 1500);
 							});
 						
@@ -326,7 +326,7 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}, 100);
 									setTimeout(() => {
 										boardDraw();
-										playGame(playerTurn = true, playerScores, jasiScores+1);
+										playGame(playerTurn = true, playerScores+1, jasiScores);
 									}, 1500);
 									}
 								});
