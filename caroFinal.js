@@ -1,6 +1,6 @@
 function init() {
 	boardDraw();
-	playGame(playerTurn = true, playerScores = 0, jasiScores = 0);}
+	playGame(player1Turn = true);}
 
 function boardDraw() { // Hàm vẽ bảng qua HTML
 	var table = "";
@@ -30,7 +30,8 @@ class Board {
 	constructor() {
 		this.main = [];					// Bàn cờ chính
 		this.button = [];				// Bảng chứa các element lấy từ id các phím (trên bàn cờ)
-		this.cellToCheck = [];			// Bảng chứa những ô quanh khu vực đã đánh
+		this.rememberedCells = [];		// Bảng chứa những ô quanh khu vực đã đánh
+
 		for (let i = 0; i < 19; i++) {
 			this.main.push([]);
 			this.button.push([]);
@@ -38,7 +39,7 @@ class Board {
 				this.button[i].push(document.getElementById("but_"+i+"_"+j));
 				this.main[i].push(0);}}}}
 
-function reorder(board, i, j, numOfCells) { // Hàm sắp thứ tự ưu tiên xem xét cho các ô còn lại sau khi ai đó đánh vào ô [i, j]
+function reorder(board, i, j, numOfCells) { // Hàm sắp thứ tự ưu tiên xem xét cho các ô còn lại sau khi ai đó đánh vào ô [i, j], trong đó numOfCells là số ô tối đa sẽ được xem xét
 	var directions = [[-1, -1], [1, 1], [1, -1], [-1, 1], [0, -1], [0, 1], [-1, 0], [1, 0]];
 	var aroundIJ = [];
 
@@ -54,14 +55,14 @@ function reorder(board, i, j, numOfCells) { // Hàm sắp thứ tự ưu tiên x
 					break;}
 
 	numOfCells -= aroundIJ.length;
-	let m = 0, n = 0, len = board.cellToCheck.length;
+	let m = 0, n = 0, len = board.rememberedCells.length;
 	while (m < numOfCells && n < len) {
-		if (!(isContains(aroundIJ, board.cellToCheck[n]) || isEqual(board.cellToCheck[n], [i, j]))) {
-			aroundIJ.push(board.cellToCheck[n]);
+		if (!(isContains(aroundIJ, board.rememberedCells[n]) || isEqual(board.rememberedCells[n], [i, j]))) {
+			aroundIJ.push(board.rememberedCells[n]);
 			m++;}
 		n++;}
 
-	board.cellToCheck = copy(aroundIJ);}
+	board.rememberedCells = copy(aroundIJ);}
 
 function isWin(mainBoard, i, j) { // Hàm kiểm tra xem người đánh vào ô [i, j] có thể thắng nhờ nước đi đó không
 	var directions = [[0, 1], [1, 0], [1, -1], [1, 1]];
@@ -83,48 +84,42 @@ function isWin(mainBoard, i, j) { // Hàm kiểm tra xem người đánh vào ô
 			else {
 				count++;
 				if (count === 5)
-					return true;}
-	}
+					return true;}}
 	return false;}
 
-function isWin4(mainBoard, i, j) { // Hàm kiểm tra xem người đánh vào ô [i, j] có thể có đường 4 thoáng 2 đầu nhờ nước đi đó không
-	var directions = [[0, 1], [1, 0], [1, -1], [1, 1]];
-	var count;		// Dùng để đếm số quân cờ trên một đường
-	var blocked;	// Dùng để đếm xem một đường bị chặn ở mấy đầu
+function hashValue(mainBoard) {
+	var top, bottom, left, right;
 
-	for (let direc of directions) {
-		count = 1;
-		blocked = 0;
-		for (let k = 1; k < 5; k++) {
-			if (isInBoard(i + k*direc[0], j + k*direc[1])) {
-				if (mainBoard[i + k*direc[0]][j + k*direc[1]] === 0)
-					break;
-				else if (mainBoard[i + k*direc[0]][j + k*direc[1]] === mainBoard[i][j])
-					count++;
-				else {
-					blocked++;
-					break;}}
-			else {
-				blocked++;
-				break;}}
-			if (count === 4 && blocked === 0 && isInBoard(i - direc[0], j - direc[1]) && mainBoard[i - direc[0]][j - direc[1]] === 0)
-				return true;
+	loop1: for (let i = 0; i < 19; i++)
+		loop2: for (let j = 0; j < 19; j++)
+			if (mainBoard[i][j] !== 0) {
+				top = i;
+				break loop1;}
 
-		for (let k = 1; k < 5; k++) {
-			if (isInBoard(i - k*direc[0], j - k*direc[1])) {
-				if (mainBoard[i - k*direc[0]][j - k*direc[1]] === 0)
-					break;
-				else if (mainBoard[i - k*direc[0]][j - k*direc[1]] === mainBoard[i][j])
-					count++;
-				else {
-					blocked++;
-					break;}}
-			else {
-				blocked++;
-				break;}
-			if (count === 4 && blocked === 0)
-				return true;}}
-	return false;}
+	loop1: for (let i = 18; i > -1; i--)
+		loop2: for (let j = 0; j < 19; j++)
+			if (mainBoard[i][j] !== 0) {
+				bottom = i;
+				break loop1;}
+
+	loop1: for (let j = 0; j < 19; j++)
+		loop2: for (let i = top; i <= bottom; i++)
+			if (mainBoard[i][j] !== 0) {
+				left = j;
+				break loop1;}
+
+	loop1: for (let j = 18; j > -1; j--)
+		loop2: for (let i = top; i <= bottom; i++)
+			if (mainBoard[i][j] !== 0) {
+				right = j;
+				break loop1;}
+
+	var hash = "";
+	hash += right - left + 1
+	for (let i = top; i <= bottom; i++)
+		for (let j = left; j <= right; j++)
+			hash += mainBoard[i][j];
+	return hash;}
 
 function getPoints(mainBoard) { // Hàm heuristic đánh giá điểm của một trạng thái bàn cờ (điểm của Jasi)
 	var directions = [[0, 1], [1, 0], [1, -1], [1, 1]];
@@ -163,41 +158,37 @@ function getPoints(mainBoard) { // Hàm heuristic đánh giá điểm của mộ
 						points += pointsBoard[blocked][count-1];}
 	return points;}
 
-function minimax(board, depth, alpha, beta, jasiTurn, someoneWin, someoneWin4) { // Hàm tìm ra nước đi tốt nhất
+function minimax(board, checkedList, depth, alpha = -1.0/0.0, beta = 1.0/0.0, jasiTurn = true, someoneWin = false) { // Hàm tìm ra nước đi tốt nhất
 	if (someoneWin)
 		if (jasiTurn)
 			return [0, 0, -10000000000 - 1000*depth];
 		else
 			return [0, 0, 10000000000 + 1000*depth];
 
-	if (depth === 0 || board.cellToCheck === []) {
-		return [0, 0, getPoints(board.main)];}
+	var len = board.rememberedCells.length
+
+	if (depth === 0 || len === 0) {
+		let hash = hashValue(board.main);
+		if (transTable[hash] === undefined)
+			transTable[hash] = getPoints(board.main);
+		return [0, 0, transTable[hash]];}
 
 	if (jasiTurn) {
 		var maxPoints = -1.0/0.0;
 		var maxMove;
-		var len = board.cellToCheck.length;
 
 		for (let k = 0; k < len; k++) {
 			var copiedBoard = copy(board);
-			var move = copiedBoard.cellToCheck[k];
+			var move = checkedList[k];
 
 			copiedBoard.main[move[0]][move[1]] = 2;
 			reorder(copiedBoard, move[0], move[1], 24);
 
 			someoneWin = isWin(copiedBoard.main, move[0], move[1]);
-			if (someoneWin4 && !someoneWin)
-				continue;
-			someoneWin4 = isWin4(copiedBoard.main, move[0], move[1]);
-			var result = minimax(copiedBoard, depth-1, alpha, beta, false, someoneWin, someoneWin4);
-			someoneWin4 = false;
+			var result = minimax(copiedBoard, copiedBoard.rememberedCells, depth-1, alpha, beta, false, someoneWin);
 			someoneWin = false;
 
 			var points = result[2];
-
-			if (depth === 5)
-				console.log(board.cellToCheck[k], points);
-
 			if (points > maxPoints) {
 				maxPoints = points;
 				maxMove = move;}
@@ -206,28 +197,21 @@ function minimax(board, depth, alpha, beta, jasiTurn, someoneWin, someoneWin4) {
 				alpha = maxPoints;
 			if (alpha > beta)
 				break;}
-		if (maxMove === undefined)
-			return [board.cellToCheck[0][0], board.cellToCheck[0][1], -10000000 - 100*depth];
 		return [maxMove[0], maxMove[1], maxPoints];}
 
 	else {
 		var minPoints = 1.0/0.0;
 		var minMove;
-		var len = board.cellToCheck.length;
 
 		for (let k = 0; k < len; k++) {
 			var copiedBoard = copy(board);
-			var move = copiedBoard.cellToCheck[k];
+			var move = checkedList[k];
 
 			copiedBoard.main[move[0]][move[1]] = 1;
 			reorder(copiedBoard, move[0], move[1], 24);
 
 			someoneWin = isWin(copiedBoard.main, move[0], move[1]);
-			if (someoneWin4 && !someoneWin)
-				continue;
-			someoneWin4 = isWin4(copiedBoard.main, move[0], move[1]);
-			var result = minimax(copiedBoard, depth-1, alpha, beta, true, someoneWin, someoneWin4);
-			someoneWin4 = false;
+			var result = minimax(copiedBoard, copiedBoard.rememberedCells, depth-1, alpha, beta, true, someoneWin);
 			someoneWin = false;
 
 			var points = result[2];
@@ -239,11 +223,9 @@ function minimax(board, depth, alpha, beta, jasiTurn, someoneWin, someoneWin4) {
 				beta = minPoints;
 			if (alpha > beta)
 				break;}
-		if (minMove === undefined)
-			return [board.cellToCheck[0][0], board.cellToCheck[0][1], 10000000 + 100*depth];
 		return [minMove[0], minMove[1], minPoints];}}
 
-function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm chơi game
+function playGame(player1Turn = true, playerScores = 0, jasiScores = 0) { // Hàm chơi game
 	const backToHome = document.getElementById("home");
 	const undo = document.getElementById("undo");
 	const announcement = document.getElementById("announcement");
@@ -252,32 +234,23 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 	const closePopupBtn = document.getElementById("closePopupBtn");
     const popupContainer = document.getElementById("popupContainer");
 
+    backToHome.onclick = function() {window.location.href = "index.html";};
+	undo.onclick = function() {
+		alert("Feature coming Soon...");}
+
 	playerX.innerText = playerScores;
 	playerO.innerText = jasiScores;
 
-	// Chọn cờ, người cầm quân X sẽ đi trước
 	var playerIcon = "X";
 	var jasiIcon = "O";
 
+	window.transTable = {};
+
 	// Khởi tạo bảng
 	var board = new Board();
-	//var undoBoard;
-	//var copied = false;
-	var twoNewestMove = [null, null];
 	var jasiMove;
 
-	backToHome.onclick = function() {window.location.href = "index.html";};
-	undo.onclick = function() {
-		alert("Coming Soon...");}
-		//board.main = copy(undoBoard.main);
-		//board.cellToCheck = copy(undoBoard.cellToCheck)
-		//console.log(board.button);
-		//board.button[twoNewestMove[0][0]][twoNewestMove[0][1]].classList.remove("x-cell");
-		//board.button[twoNewestMove[1][0]][twoNewestMove[1][1]].classList.remove("o-cell");
-		//board.button[twoNewestMove[0][0]][twoNewestMove[0][1]].innerHTML = "";
-		//board.button[twoNewestMove[1][0]][twoNewestMove[1][1]].innerHTML = "";};
-
-	if (!playerTurn) {
+	if (!player1Turn) {
 		board.main[9][9] = 2;
 		board.button[9][9].innerHTML = jasiIcon;
 		reorder(board, 9, 9, 72);}
@@ -286,22 +259,17 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 	for (let i = 0; i < 19; i++) {
 		for (let j = 0; j < 19; j++) {
 			board.button[i][j].onclick = function() {
-				//if (!copied) {
-				//	undoBoard = copy(board);
-				//	console.log(undoBoard);
-				//	copied = true;}
-				//if (i === 18 && j === 18)
-				//	copied = false;
 				if (board.main[i][j] === 0) {
 					board.button[i][j].innerHTML = playerIcon;
 					board.button[i][j].classList.add("x-cell");
 					board.main[i][j] = 1;
+
 					reorder(board, i, j, numOfCells = 72);
-					twoNewestMove[0] = [i, j]
+					transTable = {};
 
 					setTimeout(() => {
-						if (isWin(board.main, i, j)){
-        					announcement.innerText = `You win!`;
+						if (isWin(board.main, i, j)) {
+							announcement.innerText = `You win!`;
         					popupContainer.style.display = "flex";
 
 							// Đóng popup khi ấn vào dấu x
@@ -313,9 +281,8 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 								}, 100);
 								setTimeout(() => {
 									boardDraw();
-									playGame(playerTurn = true, playerScores+1, jasiScores);
-								}, 1500);
-							});
+									playGame(playerTurn = false, playerScores+1, jasiScores);
+								}, 1500);});
 						
 							// Đóng popup khi nhấn bên ngoài nó
 							window.addEventListener("click", function (event) {
@@ -327,53 +294,47 @@ function playGame(playerTurn = true, playerScores = 0, jasiScores = 0) { // Hàm
 									}, 100);
 									setTimeout(() => {
 										boardDraw();
-										playGame(playerTurn = true, playerScores+1, jasiScores);
-									}, 1500);
-									}
-								});
+										playGame(playerTurn = false, playerScores+1, jasiScores);
+									}, 1500);}});}
+						else {
+							jasiMove = minimax(board, board.rememberedCells, depth = 4);
+							board.button[jasiMove[0]][jasiMove[1]].innerHTML = jasiIcon;
+							board.button[jasiMove[0]][jasiMove[1]].classList.add("o-cell");
+							board.main[jasiMove[0]][jasiMove[1]] = 2;
 
-							playGame(playerTurn = false, playerScores+1, jasiScores);}
-						jasiMove = minimax(board, depth=4, alpha=-1.0/0.0, beta=1.0/0.0, jasiTurn=true, someoneWin=false, isWin4(board.main, i, j));
-						board.button[jasiMove[0]][jasiMove[1]].innerHTML = jasiIcon;
-						board.button[jasiMove[0]][jasiMove[1]].classList.add("o-cell");
-						board.main[jasiMove[0]][jasiMove[1]] = 2;
-						reorder(board, jasiMove[0], jasiMove[1], numOfCells = 72);
-						twoNewestMove[1] = [jasiMove[0], jasiMove[1]];
+							reorder(board, jasiMove[0], jasiMove[1], numOfCells = 72);
 
-						setTimeout(() => {if (isWin(board.main, jasiMove[0], jasiMove[1])) {
-        					announcement.innerText = `Jasi wins!`;
-        					popupContainer.style.display = "flex";
+							setTimeout(() => {
+								if (isWin(board.main, jasiMove[0], jasiMove[1])) {
+									announcement.innerText = `Jasi wins!`;
+		        					popupContainer.style.display = "flex";
 
-							// Đóng popup khi ấn vào dấu x
-							closePopupBtn.addEventListener("click", function () {
-								popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
-								setTimeout(function (){
-									popupContainer.style.display = "none";
-									popupContainer.style.animation = "";
-								}, 100);
-								setTimeout(() => {
-									boardDraw();
-									playGame(playerTurn = true, playerScores, jasiScores+1);
-								}, 1500);
-							});
-						
-							// Đóng popup khi nhấn bên ngoài nó
-							window.addEventListener("click", function (event) {
-								if (event.target === popupContainer) {
-									popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
-									setTimeout(function (){
-										popupContainer.style.display = "none";
-										popupContainer.style.animation = "";
-									}, 100);
-									setTimeout(() => {
-										boardDraw();
-										playGame(playerTurn = true, playerScores, jasiScores+1);
-									}, 1500);
-									}
-								});
-
-							}
-						}, 50);
+									// Đóng popup khi ấn vào dấu x
+									closePopupBtn.addEventListener("click", function () {
+										popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
+										setTimeout(function (){
+											popupContainer.style.display = "none";
+											popupContainer.style.animation = "";
+										}, 100);
+										setTimeout(() => {
+											boardDraw();
+											playGame(playerTurn = true, playerScores, jasiScores+1);
+										}, 1500);});
+								
+									// Đóng popup khi nhấn bên ngoài nó
+									window.addEventListener("click", function (event) {
+										if (event.target === popupContainer) {
+											popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
+											setTimeout(function (){
+												popupContainer.style.display = "none";
+												popupContainer.style.animation = "";
+											}, 100);
+											setTimeout(() => {
+												boardDraw();
+												playGame(playerTurn = true, playerScores, jasiScores+1);
+											}, 1500);}});}
+							}, 50);
+						}
 					}, 50);
 				}
 			};
