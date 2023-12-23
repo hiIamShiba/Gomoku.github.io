@@ -179,7 +179,7 @@ function minimax(board, depth, alpha = -1.0/0.0, beta = 1.0/0.0, jasiTurn = true
 
 		for (let k = 0; k < len; k++) {
 			var copiedBoard = copy(board);
-			var move = checkedList[k];
+			var move = board.rememberedCells[k];
 
 			copiedBoard.main[move[0]][move[1]] = 2;
 			reorder(copiedBoard, move[0], move[1], 24);
@@ -205,7 +205,7 @@ function minimax(board, depth, alpha = -1.0/0.0, beta = 1.0/0.0, jasiTurn = true
 
 		for (let k = 0; k < len; k++) {
 			var copiedBoard = copy(board);
-			var move = checkedList[k];
+			var move = board.rememberedCells[k];
 
 			copiedBoard.main[move[0]][move[1]] = 1;
 			reorder(copiedBoard, move[0], move[1], 24);
@@ -288,7 +288,7 @@ function playGame(player1Turn = true, playerScores = 0, jasiScores = 0) { // Hà
 							window.addEventListener("click", function (event) {
 								if (event.target === popupContainer) {
 									popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
-									setTimeout(function (){
+									setTimeout(() => {
 										popupContainer.style.display = "none";
 										popupContainer.style.animation = "";
 									}, 100);
@@ -312,7 +312,7 @@ function playGame(player1Turn = true, playerScores = 0, jasiScores = 0) { // Hà
 									// Đóng popup khi ấn vào dấu x
 									closePopupBtn.addEventListener("click", function () {
 										popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
-										setTimeout(function (){
+										setTimeout(() => {
 											popupContainer.style.display = "none";
 											popupContainer.style.animation = "";
 										}, 100);
@@ -325,7 +325,7 @@ function playGame(player1Turn = true, playerScores = 0, jasiScores = 0) { // Hà
 									window.addEventListener("click", function (event) {
 										if (event.target === popupContainer) {
 											popupContainer.style.animation = "fadeOut 0.25s ease-in-out";
-											setTimeout(function (){
+											setTimeout(() => {
 												popupContainer.style.display = "none";
 												popupContainer.style.animation = "";
 											}, 100);
