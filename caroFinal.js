@@ -158,14 +158,14 @@ function getPoints(mainBoard) { // Hàm heuristic đánh giá điểm của mộ
 						points += pointsBoard[blocked][count-1];}
 	return points;}
 
-function minimax(board, checkedList, depth, alpha = -1.0/0.0, beta = 1.0/0.0, jasiTurn = true, someoneWin = false) { // Hàm tìm ra nước đi tốt nhất
+function minimax(board, depth, alpha = -1.0/0.0, beta = 1.0/0.0, jasiTurn = true, someoneWin = false) { // Hàm tìm ra nước đi tốt nhất
 	if (someoneWin)
 		if (jasiTurn)
 			return [0, 0, -10000000000 - 1000*depth];
 		else
 			return [0, 0, 10000000000 + 1000*depth];
 
-	var len = board.rememberedCells.length
+	var len = board.rememberedCells.length;
 
 	if (depth === 0 || len === 0) {
 		let hash = hashValue(board.main);
@@ -185,7 +185,7 @@ function minimax(board, checkedList, depth, alpha = -1.0/0.0, beta = 1.0/0.0, ja
 			reorder(copiedBoard, move[0], move[1], 24);
 
 			someoneWin = isWin(copiedBoard.main, move[0], move[1]);
-			var result = minimax(copiedBoard, copiedBoard.rememberedCells, depth-1, alpha, beta, false, someoneWin);
+			var result = minimax(copiedBoard, depth-1, alpha, beta, false, someoneWin);
 			someoneWin = false;
 
 			var points = result[2];
@@ -211,7 +211,7 @@ function minimax(board, checkedList, depth, alpha = -1.0/0.0, beta = 1.0/0.0, ja
 			reorder(copiedBoard, move[0], move[1], 24);
 
 			someoneWin = isWin(copiedBoard.main, move[0], move[1]);
-			var result = minimax(copiedBoard, copiedBoard.rememberedCells, depth-1, alpha, beta, true, someoneWin);
+			var result = minimax(copiedBoard, depth-1, alpha, beta, true, someoneWin);
 			someoneWin = false;
 
 			var points = result[2];
@@ -297,7 +297,7 @@ function playGame(player1Turn = true, playerScores = 0, jasiScores = 0) { // Hà
 										playGame(playerTurn = false, playerScores+1, jasiScores);
 									}, 1500);}});}
 						else {
-							jasiMove = minimax(board, board.rememberedCells, depth = 4);
+							jasiMove = minimax(board, depth = 4);
 							board.button[jasiMove[0]][jasiMove[1]].innerHTML = jasiIcon;
 							board.button[jasiMove[0]][jasiMove[1]].classList.add("o-cell");
 							board.main[jasiMove[0]][jasiMove[1]] = 2;
